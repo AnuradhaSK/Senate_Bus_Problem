@@ -3,11 +3,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-//        float busArrivalMeanTime = 20 * 60f * 1000 ;
-//        float riderArrivalMeanTime = 30f * 1000;
+        float busArrivalMeanTime = 20 * 60f * 1000 ;
+        float riderArrivalMeanTime = 30f * 1000;
         /*Uncomment below two lines and comment above two lines when testing*/
-        float busArrivalMeanTime = 5;
-        float riderArrivalMeanTime = 1;
+//        float busArrivalMeanTime = 5;
+//        float riderArrivalMeanTime = 1;
 
 
         RiderGenerator riderGenerator = new RiderGenerator(riderArrivalMeanTime);
@@ -22,8 +22,8 @@ public class Main {
 
         while(true){
             input = scanner.nextLine();
-            if(input == termination){
-                break;
+            if(input.equals(termination)){
+                System.exit(0);
             }
 
         }
