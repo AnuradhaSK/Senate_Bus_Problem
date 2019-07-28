@@ -2,12 +2,10 @@ import java.util.Random;
 
 public class BusGenerator implements Runnable {
     private float busArrivalMeanTime;
-    private BusStop busStop;
     Random random;
 
-    public BusGenerator(float busArrivalMeanTime,BusStop busStop) {
+    public BusGenerator(float busArrivalMeanTime) {
         this.busArrivalMeanTime = busArrivalMeanTime;
-        this.busStop = busStop;
         random = new Random();
     }
 
@@ -15,7 +13,7 @@ public class BusGenerator implements Runnable {
     public void run() {
         int busNumber = 1;
         while (!Thread.currentThread().isInterrupted()) {
-            Bus bus = new Bus(busNumber, busStop);
+            Bus bus = new Bus(busNumber);
             (new Thread(bus)).start();
             busNumber++;
             try {

@@ -3,26 +3,23 @@ import java.util.concurrent.Semaphore;
 public class Bus implements Runnable{
     private final int BUS_CAPACITY= 50;
     private int busNumber;
-    private BusStop busStop;
 
-    public Bus(int busNumber, BusStop busStop){
+    public Bus(int busNumber){
         this.busNumber = busNumber;
-        this.busStop = busStop;
     }
 
     @Override
     public void run() {
         try {
-            busStop.getMutex().acquire();
             arrived();
-            int allowedRiders = Math.min(busStop.getWaitingRiders(),BUS_CAPACITY);
+            BusStop.getMutex().acquire();
+            int allowedRiders = Math.min(BusStop.getWaitingRiders(),BUS_CAPACITY);
             for(int rider=0;rider < allowedRiders;rider++){
-                busStop.getBusArrived().release();
-                busStop.getRidersBoarded().acquire();
+                BusStop.getBusArrived().release();
+                BusStop.getRidersBoarded().acquire();
             }
-            busStop.setWaitingRiders(Math.max(busStop.getWaitingRiders()-BUS_CAPACITY,0));
-            busStop.getMutex().release();
-
+            BusStop.setWaitingRiders(Math.max(BusStop.getWaitingRiders()-BUS_CAPACITY,0));
+            BusStop.getMutex().release();
             depart();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -30,7 +27,7 @@ public class Bus implements Runnable{
     }
 
     public void depart(){
-        System.out.println("Bus No: "+ busNumber + " depart and Waiting rider count : " + busStop.getWaitingRiders());
+        System.out.println("Bus No: "+ busNumber + " depart and Waiting rider count : " + BusStop.getWaitingRiders());
     }
 
     public void arrived(){

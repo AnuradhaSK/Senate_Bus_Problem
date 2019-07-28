@@ -6,15 +6,14 @@ public class Main {
 //        float busArrivalMeanTime = 20 * 60f * 1000 ;
 //        float riderArrivalMeanTime = 30f * 1000;
         /*Uncomment below two lines and comment above two lines when testing*/
-        float busArrivalMeanTime = 5 ;
+        float busArrivalMeanTime = 5;
         float riderArrivalMeanTime = 1;
 
-        BusStop busStop = new BusStop();
 
-        RiderGenerator riderGenerator = new RiderGenerator(riderArrivalMeanTime, busStop);
+        RiderGenerator riderGenerator = new RiderGenerator(riderArrivalMeanTime);
         (new Thread(riderGenerator)).start();
 
-        BusGenerator busGenerator = new BusGenerator(busArrivalMeanTime, busStop);
+        BusGenerator busGenerator = new BusGenerator(busArrivalMeanTime);
         (new Thread(busGenerator)).start();
 
         Scanner scanner = new Scanner(System.in);
@@ -26,7 +25,7 @@ public class Main {
             if(input == termination){
                 break;
             }
-//                System.exit(0);
+
         }
     }
 }

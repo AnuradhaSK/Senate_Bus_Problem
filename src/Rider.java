@@ -1,24 +1,22 @@
 public class Rider implements Runnable{
 
     private int riderNumber;
-    private BusStop busStop;
 
-    public Rider(int riderNumber, BusStop busStop){
+    public Rider(int riderNumber){
         this.riderNumber = riderNumber;
-        this.busStop = busStop;
     }
 
     @Override
     public void run() {
         try {
-            busStop.getMutex().acquire();
-            busStop.setWaitingRiders(busStop.getWaitingRiders()+1);
+            BusStop.getMutex().acquire();
             enterBusStop();
-            busStop.getMutex().release();
+            BusStop.setWaitingRiders(BusStop.getWaitingRiders()+1);
+            BusStop.getMutex().release();
 
-            busStop.getBusArrived().acquire();
+            BusStop.getBusArrived().acquire();
             boardBus();
-            busStop.getRidersBoarded().release();
+            BusStop.getRidersBoarded().release();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
