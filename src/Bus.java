@@ -14,6 +14,7 @@ public class Bus implements Runnable{
     public void run() {
         try {
             busStop.getMutex().acquire();
+            arrived();
             int allowedRiders = Math.min(busStop.getWaitingRiders(),BUS_CAPACITY);
             for(int rider=0;rider < allowedRiders;rider++){
                 busStop.getBusArrived().release();
@@ -29,7 +30,7 @@ public class Bus implements Runnable{
     }
 
     public void depart(){
-        System.out.println("Bus No: "+ busNumber + " depart");
+        System.out.println("Bus No: "+ busNumber + " depart and Waiting rider count : " + busStop.getWaitingRiders());
     }
 
     public void arrived(){
